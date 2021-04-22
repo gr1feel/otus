@@ -18,7 +18,7 @@
 - kubectl describe svc delicious-service
 - kubectl describe ingress delicious-ingress
 
-# сборка контейнера
+# сборка контейнера и развертывание 
 - docker build -t gr1feel/delicious-service:v4 -f ./Dockerfile .
 - docker push gr1feel/delicious-service:v4
 
@@ -32,13 +32,13 @@
 - kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all
 
 
-#результат Ingress
+# результат Ingress
 - kubectl describe ingress delicious-ingress
 - curl -H'Host: arch.homework' http://192.168.64.3/otusapp/ivanov/
 - curl -H'Host: arch.homework' http://192.168.64.3/otusapp/ivanov/version
 curl -H'Host: arch.homework' http://192.168.64.3/otusapp/ivanov/health
 
-#результат Service (NodePort)
+# результат Service (NodePort)
 - kubectl describe svc delicious-service
 - minikube ssh
 - curl http://10.103.73.107:8000/
