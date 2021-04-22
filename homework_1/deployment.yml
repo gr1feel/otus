@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: delicious-deployment
+spec:
+    replicas: 2
+    selector:
+       matchLabels:
+          app: delicious-app
+    template:
+       metadata:
+          labels:
+             app: delicious-app
+       spec:
+          containers:
+          - name: delicious
+            image: gr1feel/delicious-service:v4
+            ports:
+              - name: webapp
+                containerPort: 8000
+            livenessProbe:
+              httpGet:
+                port: 8000
+                path: /
+            readinessProbe:
+              httpGet:
+                port: 8000
+                path: /health

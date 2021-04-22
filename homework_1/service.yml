@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: delicious-service
+spec:
+  selector:
+    app: delicious-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: webapp
+  type: NodePort
