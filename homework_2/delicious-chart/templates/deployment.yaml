@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "delicious-chart.fullname" . }}
+  labels:
+    {{- include "delicious-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "delicious-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "delicious-chart.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}"
+          ports:
+            - name: webapp
+              containerPort: {{ .Values.container.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              port: {{ .Values.container.port }}
+              path: /
+          readinessProbe:
+            httpGet:
+              port: {{ .Values.container.port }}
+              path: /health
+          env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: delicious-secret
+                  key: DATABASE_URI
+            - name: GREETING
+              valueFrom:
+                configMapKeyRef:
+                  name: delicious-config
+                  key: GREETING
+

@@ -1,0 +1,18 @@
+replicaCount: 2
+
+image:
+  repository: gr1feel/delicious-service:homework2_v1
+
+container:
+  port: 8000
+
+service:
+  type: LoadBalancer
+  port: 9999
+
+externalPostgresql:
+  postgresqlUsername: myuser
+  postgresqlPassword: passwd
+  postgresqlDatabase: delicious
+  postgresqlHost: "postgres"
+  postgresqlPort: "5432"
