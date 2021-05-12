@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using DeliciousService.SomeCode;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Npgsql;
 
 namespace DeliciousService.Controllers
 {
@@ -12,6 +15,11 @@ namespace DeliciousService.Controllers
     [Route("[controller]")]
     public class HealthController : ControllerBase
     {
+        public record HealthDto
+        {
+            public string Status { get; init; }
+        }
+
         private readonly ILogger<HealthController> _logger;
 
         public HealthController(ILogger<HealthController> logger)
@@ -20,9 +28,12 @@ namespace DeliciousService.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public HealthDto Get()
         {
-            return "{\"status\": \"OK\"}";
+            return new HealthDto()
+            {
+                Status = "OK"
+            };
         }
     }
 }

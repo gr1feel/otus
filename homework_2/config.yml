@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delicious-config
+data:
+  GREETING: Bonjour from kubectl.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: delicious-secret
+type: Opaque
+data:
+  DATABASE_URI: VXNlciBJZD1teXVzZXI7UGFzc3dvcmQ9cGFzc3dkO0hvc3Q9cG9zdGdyZXM7UG9ydD01NDMyO0RhdGFiYXNlPWRlbGljaW91cztJbnRlZ3JhdGVkIFNlY3VyaXR5ID0gRmFsc2U7

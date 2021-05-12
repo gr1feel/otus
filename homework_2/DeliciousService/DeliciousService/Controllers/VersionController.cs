@@ -23,7 +23,7 @@ namespace DeliciousService.Controllers
         [HttpGet]
         public VersionDto Get()
         {
-            return new() {Homework = 2, Version = 5};
+            return new() {Homework = 2, Version = 7};
         }
     }
 }

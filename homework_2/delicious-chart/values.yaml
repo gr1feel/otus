@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: gr1feel/delicious-service:homework2_v1
+  repository: gr1feel/delicious-service:homework_2_v7
 
 container:
   port: 8000

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using DeliciousService.SomeCode;
+using DeliciousService.SomeCode.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Npgsql;
@@ -13,13 +15,6 @@ namespace DeliciousService.Controllers
     [Route("db")]
     public class DatabaseController : ControllerBase
     {
-        public record StudentDto
-        {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public int Age { get; set; }
-        }
-
         private readonly ILogger<DatabaseController> _logger;
 
         public DatabaseController(ILogger<DatabaseController> logger)
@@ -35,9 +30,9 @@ namespace DeliciousService.Controllers
         public async Task<List<StudentDto>> Get()
         {
             var connectionString = Environment.GetEnvironmentVariable("DATABASE_URI");
-            
+
             await using NpgsqlConnection connect = new NpgsqlConnection(connectionString);
-            await using NpgsqlCommand cmd = new NpgsqlCommand("select * from students", connect);
+            await using NpgsqlCommand cmd = new NpgsqlCommand("select * from students order by id", connect);
             await connect.OpenAsync();
             await using var reader = await cmd.ExecuteReaderAsync();
 
@@ -47,14 +42,15 @@ namespace DeliciousService.Controllers
             {
                 var student = new StudentDto()
                 {
-                    FirstName = (string)reader["first_name"],
-                    LastName = (string)reader["last_name"],
-                    Age = (int)reader["age"]
+                    Id = (int) reader["id"],
+                    FirstName = (string) reader["first_name"],
+                    LastName = (string) reader["last_name"],
+                    Age = (int) reader["age"]
                 };
-                
+
                 students.Add(student);
             }
-            
+
             return students;
         }
     }

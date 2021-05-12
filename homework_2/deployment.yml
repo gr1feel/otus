@@ -14,15 +14,26 @@ spec:
        spec:
           containers:
           - name: delicious
-            image: gr1feel/delicious-service:v4
+            image: gr1feel/delicious-service:homework_2_v7
             ports:
               - name: webapp
                 containerPort: 8000
             livenessProbe:
               httpGet:
-                port: 8000
+                port: webapp
                 path: /
             readinessProbe:
               httpGet:
-                port: 8000
+                port: webapp
                 path: /health
+            env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: delicious-secret
+                  key: DATABASE_URI
+            - name: GREETING
+              valueFrom:
+                configMapKeyRef:
+                  name: delicious-config
+                  key: GREETING

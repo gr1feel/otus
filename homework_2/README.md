@@ -1,3 +1,16 @@
+# Инструкция для проверки ДЗ.
+- kubectl config set-context --current --namespace=myapp
+- Установить PostgresSql
+	- helm install pg bitnami/postgresql -f postgers/pg_values.yaml
+- Варинты развертывания сервиса (на выбор)
+	- kubectl apply -f .
+	- helm install delicious ./delicious-chart
+- Тестирование сервиса (на выбор)
+	- newman run UserAPI.postman_collection.json
+	- или через Swagger http://arch.homework/swagger/index.html
+- Удаление (зависит от установки)
+	- helm uninstall delicious
+	- kubectl delete -f .
 
 # уcтановка и настройка helm
 
@@ -16,28 +29,14 @@
     - Enter Load Balancer End IP: 192.168.64.190
 
 # сборка контейнера и развертывание 
-- docker build -t gr1feel/delicious-service:homework2_v1 -f ./Dockerfile .
-- docker push gr1feel/delicious-service:homework2_v1
+- docker build -t gr1feel/delicious-service:homework_2_v7 -f ./Dockerfile .
+- docker push gr1feel/delicious-service:homework_2_v7
 
-
-# БД
-```
-create table students
-(
-	id serial
-		constraint students_pk
-			primary key,
-	first_name varchar(250),
-	last_name varchar(250),
-	age int
-);
-
-insert into students (first_name, last_name, age) values ('Михаил', 'Сидоров', 25);
-insert into students (first_name, last_name, age) values ('Тарас', 'Бульба', 25);
-```
 
 #  установка приложения
 -  Просмотр манифестов: helm install delicious ./delicious-chart --dry-run
 
 - helm install delicious ./delicious-chart 
 - или helm upgrade delicious ./delicious-chart 
+
+- kubectl delete daemonsets,replicasets,services,deployments,ingress,pods,rc,statefulset --all

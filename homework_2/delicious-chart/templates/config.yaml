@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: delicious-config
 data:
-  GREETING: Bonjour
+  GREETING: Hello from helm chart.
 ---
 apiVersion: v1
 kind: Secret
