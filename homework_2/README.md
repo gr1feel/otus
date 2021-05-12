@@ -1,12 +1,12 @@
 # Инструкция для проверки ДЗ.
 - kubectl config set-context --current --namespace=myapp
 - Установить PostgresSql
-	- helm install pg bitnami/postgresql -f postgers/pg_values.yaml
+	- helm install pg bitnami/postgresql -f postgres/pg_values.yaml
 - Варинты развертывания сервиса (на выбор)
 	- kubectl apply -f .
 	- helm install delicious ./delicious-chart
 - Тестирование сервиса (на выбор)
-	- newman run UserAPI.postman_collection.json
+	- newman run postman/UserAPI.postman_collection.json
 	- или через Swagger http://arch.homework/swagger/index.html
 - Удаление (зависит от установки)
 	- helm uninstall delicious
